@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connor's Summer Math Program</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sun: #f59e0b;
+    --sunorange: #f97316;
+    --sunred: #ef4444;
+    --yellow: #fbbf24;
+    --lime: #84cc16;
+    --sky: #38bdf8;
+    --blue: #0ea5e9;
+    --bg: #fffbeb;
+    --dark: #1c1917;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(160deg, #f59e0b 0%, #f97316 45%, #fbbf24 100%);
+    padding: 70px 20px 100px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Rays behind everything */
+  .rays {
+    position: absolute;
+    inset: 0;
+    background: repeating-conic-gradient(rgba(255,255,255,0.07) 0deg, rgba(255,255,255,0.07) 10deg, transparent 10deg, transparent 20deg);
+    pointer-events: none;
+  }
+
+  /* Big sun circle */
+  .sun-circle {
+    position: absolute;
+    top: -80px; left: 50%; transform: translateX(-50%);
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, #fef3c7 30%, #fbbf24 70%);
+    border-radius: 50%;
+    box-shadow: 0 0 60px 20px rgba(251,191,36,0.5);
+    animation: pulse 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes pulse { 0%,100%{box-shadow:0 0 60px 20px rgba(251,191,36,0.5)} 50%{box-shadow:0 0 90px 40px rgba(251,191,36,0.7)} }
+
+  .floating-icons {
+    position: absolute; inset: 0; pointer-events: none;
+  }
+  .fi {
+    position: absolute;
+    font-size: 1.8rem;
+    animation: floatUp 4s ease-in-out infinite;
+    opacity: 0.85;
+  }
+  @keyframes floatUp {
+    0%,100%{transform:translateY(0) rotate(-5deg)} 50%{transform:translateY(-14px) rotate(5deg)}
+  }
+
+  .hero-content { position: relative; z-index: 2; }
+
+  .summer-tag {
+    display: inline-block;
+    background: white;
+    color: var(--sunorange);
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    padding: 8px 24px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    letter-spacing: 1px;
+  }
+
+  .hero h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    color: white;
+    line-height: 1.1;
+    text-shadow: 3px 4px 0 rgba(180,83,9,0.35);
+    animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    margin-bottom: 14px;
+  }
+  @keyframes popIn { 0%{transform:scale(0.5);opacity:0} 100%{transform:scale(1);opacity:1} }
+
+  .hero .subtitle {
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: #fff7ed;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .hero .dates-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.25);
+    color: white;
+    font-weight: 800;
+    font-size: 1rem;
+    padding: 8px 20px;
+    border-radius: 100px;
+    border: 2px solid rgba(255,255,255,0.5);
+    margin-bottom: 28px;
+  }
+
+  .price-badge {
+    display: inline-block;
+    background: white;
+    color: var(--sunorange);
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    padding: 16px 44px;
+    border-radius: 100px;
+    box-shadow: 0 8px 0 rgba(180,83,9,0.3), 0 14px 30px rgba(0,0,0,0.2);
+    animation: wiggle 2.5s ease-in-out infinite;
+  }
+  @keyframes wiggle { 0%,100%{transform:rotate(-2deg)} 50%{transform:rotate(2deg)} }
+
+  /* ── WHY SUMMER ── */
+  .summer-why {
+    background: linear-gradient(135deg, #fff7ed, #fef3c7);
+    padding: 60px 20px;
+    border-bottom: 4px dashed #fcd34d;
+  }
+  .summer-why-inner { max-width: 1000px; margin: 0 auto; }
+  .summer-why h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    text-align: center;
+    color: var(--sunorange);
+    margin-bottom: 12px;
+  }
+  .summer-why p.sub {
+    text-align: center; color: #78716c; font-size: 1rem; font-weight: 600; margin-bottom: 40px;
+  }
+  .why-summer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+  .why-summer-card {
+    background: white;
+    border-radius: 20px;
+    padding: 28px 22px;
+    text-align: center;
+    box-shadow: 0 4px 0 #fcd34d, 0 8px 20px rgba(0,0,0,0.07);
+    border: 2px solid #fde68a;
+    transition: transform 0.2s;
+  }
+  .why-summer-card:hover { transform: translateY(-6px); }
+  .why-summer-card .ws-icon { font-size: 2.8rem; margin-bottom: 12px; }
+  .why-summer-card h3 { font-family: 'Fredoka One', cursive; font-size: 1.2rem; color: var(--dark); margin-bottom: 8px; }
+  .why-summer-card p { font-size: 0.9rem; color: #78716c; line-height: 1.6; }
+
+  /* ── EMOJI ROW ── */
+  .emoji-row {
+    text-align: center; padding: 18px; font-size: 1.9rem; letter-spacing: 8px;
+    background: white; border-bottom: 4px dashed #fde68a;
+  }
+  .emoji-row span { display: inline-block; animation: bounce 1s ease-in-out infinite; }
+  .emoji-row span:nth-child(2){animation-delay:.12s}
+  .emoji-row span:nth-child(3){animation-delay:.24s}
+  .emoji-row span:nth-child(4){animation-delay:.36s}
+  .emoji-row span:nth-child(5){animation-delay:.48s}
+  @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+  /* ── GRADE SECTION ── */
+  .section { padding: 60px 20px; max-width: 900px; margin: 0 auto; }
+  .section-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    text-align: center; margin-bottom: 10px; color: var(--dark);
+  }
+  .section-sub { text-align: center; color: #78716c; font-size: 1rem; margin-bottom: 36px; font-weight: 600; }
+
+  /* GRADE CARDS */
+  .grade-card {
+    background: white; border-radius: 24px; margin-bottom: 20px;
+    box-shadow: 0 6px 0 rgba(0,0,0,0.08), 0 10px 24px rgba(0,0,0,0.06);
+    overflow: hidden; border: 3px solid transparent;
+  }
+  .grade-card.g3 { border-color: #fbbf24; box-shadow: 0 6px 0 #fbbf24; }
+  .grade-card.g4 { border-color: var(--sunorange); box-shadow: 0 6px 0 var(--sunorange); }
+  .grade-card.g5 { border-color: var(--lime); box-shadow: 0 6px 0 var(--lime); }
+
+  .grade-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 26px; cursor: pointer; user-select: none; transition: background 0.2s;
+  }
+  .grade-header:hover { background: #fffbeb; }
+  .grade-header-left { display: flex; align-items: center; gap: 14px; }
+  .grade-emoji { font-size: 2.2rem; }
+  .grade-header h3 { font-family: 'Fredoka One', cursive; font-size: 1.5rem; }
+  .grade-card.g3 .grade-header h3 { color: #b45309; }
+  .grade-card.g4 .grade-header h3 { color: var(--sunorange); }
+  .grade-card.g5 .grade-header h3 { color: #65a30d; }
+  .grade-header p { font-size: 0.82rem; color: #a8a29e; font-weight: 700; margin-top: 2px; }
+  .chevron { font-size: 1.3rem; transition: transform 0.3s; color: #a8a29e; }
+  .grade-card.open .chevron { transform: rotate(180deg); }
+
+  .topics-panel { max-height: 0; overflow: hidden; transition: max-height 0.45s ease; }
+  .grade-card.open .topics-panel { max-height: 380px; }
+
+  .topics-scroll {
+    max-height: 340px; overflow-y: auto;
+    padding: 16px 24px 24px;
+    border-top: 2px dashed #fde68a;
+    scrollbar-width: thin; scrollbar-color: #fcd34d #fffbeb;
+  }
+  .topics-scroll::-webkit-scrollbar { width: 6px; }
+  .topics-scroll::-webkit-scrollbar-track { background: #fffbeb; border-radius: 10px; }
+  .topics-scroll::-webkit-scrollbar-thumb { background: #fcd34d; border-radius: 10px; }
+
+  .topics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); gap: 12px; }
+
+  .topic-chip {
+    background: #fffbeb; border-radius: 14px; padding: 12px 14px;
+    display: flex; align-items: center; gap: 9px;
+    font-weight: 700; font-size: 0.88rem; color: var(--dark);
+    border: 2px solid #fde68a; cursor: pointer;
+    transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+  }
+  .topic-chip:hover { transform: translateY(-3px); box-shadow: 0 5px 14px rgba(0,0,0,0.1); }
+  .grade-card.g3 .topic-chip:hover { border-color: #fbbf24; background: #fef3c7; }
+  .grade-card.g4 .topic-chip:hover { border-color: var(--sunorange); background: #fff7ed; }
+  .grade-card.g5 .topic-chip:hover { border-color: var(--lime); background: #f7fee7; }
+  .topic-chip .t-icon { font-size: 1.2rem; flex-shrink: 0; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(28,25,23,0.6);
+    z-index: 1000; display: flex; align-items: center; justify-content: center;
+    padding: 20px; opacity: 0; pointer-events: none;
+    transition: opacity 0.25s ease; backdrop-filter: blur(4px);
+  }
+  .modal-overlay.visible { opacity: 1; pointer-events: all; }
+
+  .modal {
+    background: white; border-radius: 28px; width: 100%; max-width: 600px;
+    max-height: 85vh; overflow: hidden; display: flex; flex-direction: column;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.3s cubic-bezier(0.175,0.885,0.32,1.275);
+  }
+  .modal-overlay.visible .modal { transform: scale(1) translateY(0); }
+
+  .modal-header {
+    padding: 26px 26px 18px;
+    display: flex; align-items: flex-start; justify-content: space-between;
+    border-bottom: 2px solid #fef3c7; flex-shrink: 0;
+    background: linear-gradient(135deg, #fffbeb, #fff7ed);
+  }
+  .modal-header-left { display: flex; align-items: center; gap: 14px; }
+  .modal-icon { font-size: 2.8rem; }
+  .modal-header h2 { font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: var(--dark); }
+  .modal-grade-tag {
+    display: inline-block; font-size: 0.75rem; font-weight: 800;
+    padding: 3px 10px; border-radius: 100px; margin-top: 4px; letter-spacing: 0.5px;
+  }
+  .tag-g3 { background: #fef3c7; color: #b45309; }
+  .tag-g4 { background: #ffedd5; color: #c2410c; }
+  .tag-g5 { background: #ecfccb; color: #4d7c0f; }
+
+  .modal-close {
+    background: #fef3c7; border: none; border-radius: 50%;
+    width: 36px; height: 36px; font-size: 1.1rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: background 0.15s; color: #78716c;
+  }
+  .modal-close:hover { background: #fde68a; }
+
+  .modal-body {
+    overflow-y: auto; padding: 22px 26px 26px;
+    scrollbar-width: thin; scrollbar-color: #fcd34d #fffbeb;
+  }
+  .modal-body::-webkit-scrollbar { width: 6px; }
+  .modal-body::-webkit-scrollbar-track { background: #fffbeb; border-radius: 10px; }
+  .modal-body::-webkit-scrollbar-thumb { background: #fcd34d; border-radius: 10px; }
+
+  .modal-desc { font-size: 1rem; line-height: 1.7; color: #57534e; margin-bottom: 22px; }
+
+  .modal-section-title {
+    font-family: 'Fredoka One', cursive; font-size: 1.15rem;
+    color: var(--dark); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+  }
+
+  .example-box {
+    background: #fffbeb; border-radius: 14px; padding: 16px 18px;
+    border-left: 4px solid var(--sun); margin-bottom: 12px;
+  }
+  .example-box.orange { border-left-color: var(--sunorange); background: #fff7ed; }
+  .example-box.lime { border-left-color: var(--lime); background: #f7fee7; }
+  .example-box.sky { border-left-color: var(--sky); background: #f0f9ff; }
+
+  .example-box .ex-label { font-size: 0.73rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #a8a29e; margin-bottom: 5px; }
+  .example-box .ex-content { font-size: 0.98rem; font-weight: 700; color: var(--dark); line-height: 1.5; }
+  .example-box .ex-answer { font-size: 0.88rem; color: #78716c; margin-top: 4px; }
+
+  .tips-list { list-style: none; }
+  .tips-list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 8px 0; font-size: 0.93rem; color: #57534e; line-height: 1.5;
+    border-bottom: 1px solid #fef3c7;
+  }
+  .tips-list li:last-child { border-bottom: none; }
+  .tips-list li .tip-bullet { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+
+  /* ── SPOTS BANNER ── */
+  .spots-banner {
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+    padding: 40px 20px;
+    text-align: center;
+    color: white;
+  }
+  .spots-banner h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.15);
+  }
+  .spots-banner p { font-size: 1.05rem; opacity: 0.9; font-weight: 600; margin-bottom: 24px; }
+  .spots-pills { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+  .spots-pill {
+    background: rgba(255,255,255,0.2);
+    border: 2px solid rgba(255,255,255,0.5);
+    color: white; font-weight: 800; font-size: 0.95rem;
+    padding: 10px 20px; border-radius: 100px;
+  }
+
+  /* ── ABOUT ME ── */
+  .about-section {
+    background: white;
+    padding: 60px 20px;
+    border-top: 4px dashed #fde68a;
+    border-bottom: 4px dashed #fde68a;
+  }
+  .about-inner { max-width: 820px; margin: 0 auto; }
+  .about-card {
+    background: linear-gradient(135deg, #fffbeb, #fff7ed);
+    border-radius: 28px;
+    padding: 40px;
+    border: 3px solid #fde68a;
+    box-shadow: 0 8px 0 #fcd34d, 0 16px 40px rgba(245,158,11,0.15);
+  }
+  .about-top {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+  .about-avatar {
+    font-size: 4.5rem;
+    background: white;
+    border-radius: 50%;
+    width: 90px; height: 90px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 0 #fcd34d, 0 8px 20px rgba(0,0,0,0.1);
+    border: 3px solid #fde68a;
+    flex-shrink: 0;
+    animation: wobble 3s ease-in-out infinite;
+  }
+  @keyframes wobble { 0%,100%{transform:rotate(-3deg)} 50%{transform:rotate(3deg)} }
+  .about-name-block h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    color: var(--dark);
+  }
+  .about-age-tag {
+    display: inline-block;
+    background: var(--yellow);
+    color: #78350f;
+    font-weight: 800;
+    font-size: 0.85rem;
+    padding: 5px 14px;
+    border-radius: 100px;
+    margin-top: 6px;
+  }
+  .about-bio {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #57534e;
+    margin-bottom: 24px;
+  }
+  .mission-box {
+    background: white;
+    border-radius: 18px;
+    padding: 20px 24px;
+    border-left: 5px solid var(--sunorange);
+    margin-bottom: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .mission-label {
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--sunorange);
+    margin-bottom: 8px;
+  }
+  .mission-text {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.1rem, 3vw, 1.4rem);
+    color: var(--dark);
+    line-height: 1.4;
+  }
+  .about-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .about-chip {
+    background: white;
+    border: 2px solid #fde68a;
+    border-radius: 100px;
+    padding: 8px 16px;
+    font-weight: 800;
+    font-size: 0.88rem;
+    color: #78350f;
+    box-shadow: 0 2px 0 #fcd34d;
+    transition: transform 0.15s;
+  }
+  .about-chip:hover { transform: translateY(-3px); }
+
+  /* ── WHY SECTION ── */
+  .why-section {
+    background: linear-gradient(135deg, #78350f, #b45309);
+    padding: 60px 20px; color: white;
+  }
+  .why-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+  .why-section .section-title { color: white; margin-bottom: 32px; }
+  .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .why-item {
+    background: rgba(255,255,255,0.1); border-radius: 20px; padding: 26px 18px;
+    border: 2px solid rgba(255,255,255,0.2); transition: background 0.2s;
+  }
+  .why-item:hover { background: rgba(255,255,255,0.2); }
+  .why-item .icon { font-size: 2.4rem; margin-bottom: 10px; }
+  .why-item h4 { font-family: 'Fredoka One', cursive; font-size: 1.15rem; margin-bottom: 6px; }
+  .why-item p { font-size: 0.86rem; opacity: 0.85; line-height: 1.55; }
+
+  /* ── CONTACT ── */
+  .contact-section { padding: 60px 20px; text-align: center; max-width: 700px; margin: 0 auto; }
+  .contact-section p { font-size: 1.05rem; color: #78716c; margin-bottom: 30px; font-weight: 600; }
+  .phone-card {
+    background: white; border-radius: 28px; padding: 40px;
+    box-shadow: 0 8px 0 var(--sun), 0 16px 40px rgba(245,158,11,0.25);
+    border: 3px solid var(--sun); display: inline-block; width: 100%; max-width: 420px;
+  }
+  .phone-card .phone-emoji { font-size: 3rem; margin-bottom: 12px; display: block; }
+  .phone-card .phone-label { font-size: 0.85rem; font-weight: 800; color: #a8a29e; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+  .phone-card .phone-number {
+    font-family: 'Fredoka One', cursive; font-size: clamp(2rem, 6vw, 2.8rem);
+    color: var(--sunorange); display: block; text-decoration: none; transition: color 0.2s;
+  }
+  .phone-card .phone-number:hover { color: var(--sun); }
+  .phone-card .phone-note { font-size: 0.83rem; color: #a8a29e; margin-top: 10px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #1c1917; color: #78716c;
+    text-align: center; padding: 26px 20px; font-size: 0.88rem;
+  }
+  footer span { color: var(--yellow); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="rays"></div>
+  <div class="sun-circle"></div>
+  <div class="floating-icons">
+    <span class="fi" style="left:4%;top:20%;animation-delay:0s;">☀️</span>
+    <span class="fi" style="left:88%;top:12%;animation-delay:0.5s;">🌻</span>
+    <span class="fi" style="left:80%;top:65%;animation-delay:1s;">🔢</span>
+    <span class="fi" style="left:10%;top:70%;animation-delay:0.7s;">✏️</span>
+    <span class="fi" style="left:50%;top:8%;animation-delay:1.3s;">⭐</span>
+    <span class="fi" style="left:93%;top:42%;animation-delay:0.3s;">🧮</span>
+    <span class="fi" style="left:3%;top:45%;animation-delay:1.6s;">🌟</span>
+  </div>
+  <div class="hero-content">
+    <div class="summer-tag">☀️ SUMMER 2026 ☀️</div>
+    <h1>Connor's Summer<br>Math Program</h1>
+    <p class="subtitle">Keep your math skills sharp all summer long! 🔢</p>
+    <div class="dates-badge">📅 May 26 – August 6 · In-Person · Grades 3–5</div>
+    <br><br>
+    <div class="price-badge">Only $25/hour!</div>
+  </div>
+</section>
+
+<!-- WHY SUMMER TUTORING -->
+<section class="summer-why">
+  <div class="summer-why-inner">
+    <h2>Don't Let the "Summer Slide" Win! 📉</h2>
+    <p class="sub">Studies show kids can lose up to 2 months of math skills over summer. Connor's program keeps that from happening!</p>
+    <div class="why-summer-grid">
+      <div class="why-summer-card">
+        <div class="ws-icon">📉</div>
+        <h3>Stop the Slide</h3>
+        <p>Kids who don't practice math over summer fall behind when school starts. Stay ahead of the curve!</p>
+      </div>
+      <div class="why-summer-card">
+        <div class="ws-icon">🚀</div>
+        <h3>Get Ahead for Fall</h3>
+        <p>Use summer to preview next year's topics so your child walks into class confident and ready.</p>
+      </div>
+      <div class="why-summer-card">
+        <div class="ws-icon">😎</div>
+        <h3>In-Person & Fun</h3>
+        <p>Face-to-face sessions from May 26 – August 6 that are engaging, hands-on, and fit around your summer schedule.</p>
+      </div>
+      <div class="why-summer-card">
+        <div class="ws-icon">💪</div>
+        <h3>Build Real Confidence</h3>
+        <p>Students who review over summer start the year feeling strong instead of stressed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPOTS BANNER -->
+<div class="spots-banner">
+  <h2>☀️ Limited Summer Spots Available!</h2>
+  <p>Sessions are flexible — mornings, afternoons, or whenever works for your family.</p>
+  <div class="spots-pills">
+    <div class="spots-pill">📅 May 26 – August 6</div>
+    <div class="spots-pill">🏠 In-Person Only</div>
+    <div class="spots-pill">🌞 Summer 2026</div>
+    <div class="spots-pill">⏱️ 1-Hour Sessions</div>
+  </div>
+</div>
+
+<div class="emoji-row">
+  <span>➕</span><span>➖</span><span>✖️</span><span>➗</span><span>🔢</span>
+</div>
+
+<!-- MATH TOPICS -->
+<section class="section">
+  <h2 class="section-title">What We Cover This Summer 🧮</h2>
+  <p class="section-sub">Click a grade to expand — then tap any topic to see examples & details!</p>
+
+  <!-- 3RD GRADE -->
+  <div class="grade-card g3" id="card3">
+    <div class="grade-header" onclick="toggle('card3')">
+      <div class="grade-header-left">
+        <span class="grade-emoji">🎒</span>
+        <div><h3>3rd Grade Math</h3><p>Click to see all topics</p></div>
+      </div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="topics-panel">
+      <div class="topics-scroll">
+        <div class="topics-grid">
+          <div class="topic-chip" onclick="openModal('mult3')"><span class="t-icon">✖️</span> Multiplication (×1–×10)</div>
+          <div class="topic-chip" onclick="openModal('div3')"><span class="t-icon">➗</span> Intro to Division</div>
+          <div class="topic-chip" onclick="openModal('add3')"><span class="t-icon">➕</span> Adding 3-Digit Numbers</div>
+          <div class="topic-chip" onclick="openModal('sub3')"><span class="t-icon">➖</span> Subtracting 3-Digit Numbers</div>
+          <div class="topic-chip" onclick="openModal('frac3')"><span class="t-icon">🍕</span> Basic Fractions</div>
+          <div class="topic-chip" onclick="openModal('time3')"><span class="t-icon">📏</span> Measurement & Time</div>
+          <div class="topic-chip" onclick="openModal('shape3')"><span class="t-icon">📐</span> Shapes & Perimeter</div>
+          <div class="topic-chip" onclick="openModal('graph3')"><span class="t-icon">📊</span> Simple Graphs & Data</div>
+          <div class="topic-chip" onclick="openModal('word3')"><span class="t-icon">🧩</span> Word Problems</div>
+          <div class="topic-chip" onclick="openModal('money3')"><span class="t-icon">💰</span> Money & Making Change</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4TH GRADE -->
+  <div class="grade-card g4" id="card4">
+    <div class="grade-header" onclick="toggle('card4')">
+      <div class="grade-header-left">
+        <span class="grade-emoji">📖</span>
+        <div><h3>4th Grade Math</h3><p>Click to see all topics</p></div>
+      </div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="topics-panel">
+      <div class="topics-scroll">
+        <div class="topics-grid">
+          <div class="topic-chip" onclick="openModal('mult4')"><span class="t-icon">✖️</span> Multi-Digit Multiplication</div>
+          <div class="topic-chip" onclick="openModal('div4')"><span class="t-icon">➗</span> Long Division</div>
+          <div class="topic-chip" onclick="openModal('efrac4')"><span class="t-icon">🍕</span> Equivalent Fractions</div>
+          <div class="topic-chip" onclick="openModal('addfrac4')"><span class="t-icon">➕</span> Adding & Subtracting Fractions</div>
+          <div class="topic-chip" onclick="openModal('dec4')"><span class="t-icon">🔢</span> Decimals (Tenths & Hundredths)</div>
+          <div class="topic-chip" onclick="openModal('area4')"><span class="t-icon">📐</span> Area & Perimeter</div>
+          <div class="topic-chip" onclick="openModal('angle4')"><span class="t-icon">📏</span> Angles & Lines</div>
+          <div class="topic-chip" onclick="openModal('graph4')"><span class="t-icon">📊</span> Bar Graphs & Line Plots</div>
+          <div class="topic-chip" onclick="openModal('word4')"><span class="t-icon">🧩</span> Multi-Step Word Problems</div>
+          <div class="topic-chip" onclick="openModal('factor4')"><span class="t-icon">🔁</span> Factors & Multiples</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5TH GRADE -->
+  <div class="grade-card g5" id="card5">
+    <div class="grade-header" onclick="toggle('card5')">
+      <div class="grade-header-left">
+        <span class="grade-emoji">🏆</span>
+        <div><h3>5th Grade Math</h3><p>Click to see all topics</p></div>
+      </div>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="topics-panel">
+      <div class="topics-scroll">
+        <div class="topics-grid">
+          <div class="topic-chip" onclick="openModal('multfrac5')"><span class="t-icon">✖️</span> Multiplying Fractions</div>
+          <div class="topic-chip" onclick="openModal('divfrac5')"><span class="t-icon">➗</span> Dividing Fractions</div>
+          <div class="topic-chip" onclick="openModal('dec5')"><span class="t-icon">🔢</span> Decimals to Thousandths</div>
+          <div class="topic-chip" onclick="openModal('adddec5')"><span class="t-icon">➕</span> Adding & Subtracting Decimals</div>
+          <div class="topic-chip" onclick="openModal('multdec5')"><span class="t-icon">✖️</span> Multiplying Decimals</div>
+          <div class="topic-chip" onclick="openModal('vol5')"><span class="t-icon">📦</span> Volume of 3D Shapes</div>
+          <div class="topic-chip" onclick="openModal('coord5')"><span class="t-icon">📐</span> Coordinate Plane & Graphing</div>
+          <div class="topic-chip" onclick="openModal('ops5')"><span class="t-icon">🔣</span> Order of Operations</div>
+          <div class="topic-chip" onclick="openModal('alg5')"><span class="t-icon">🧮</span> Intro to Algebra Patterns</div>
+          <div class="topic-chip" onclick="openModal('word5')"><span class="t-icon">🧩</span> Complex Word Problems</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT ME -->
+<section class="about-section">
+  <div class="about-inner">
+    <div class="about-card">
+      <div class="about-top">
+        <div class="about-avatar">😊</div>
+        <div class="about-name-block">
+          <h2>Connor Shindler</h2>
+          <div class="about-age-tag">⭐ 12 Years Old · Your Math Tutor</div>
+        </div>
+      </div>
+      <div class="about-bio">
+        <p>Hi! I'm Connor, and I started this tutoring program because I genuinely love helping other kids understand math. I know how frustrating it can feel when something just won't click — and I know how amazing it feels when it finally does. That's exactly what I'm here for!</p>
+        <p style="margin-top:10px;">I'm great with kids, super patient, and I make every session fun and pressure-free. No judgment here — just kindness and support! 🙌</p>
+      </div>
+      <div class="mission-box">
+        <div class="mission-label">💛 My Personal Mission Statement</div>
+        <div class="mission-text">"Help others, be kind, and treat people the way I want to be treated."</div>
+      </div>
+      <div class="about-chips">
+        <div class="about-chip">🧒 Great with Kids</div>
+        <div class="about-chip">😄 Patient & Encouraging</div>
+        <div class="about-chip">🔢 Math Lover</div>
+        <div class="about-chip">💛 Kind & Caring</div>
+        <div class="about-chip">🌟 Passionate Helper</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CONNOR -->
+<section class="why-section">
+  <div class="why-inner">
+    <h2 class="section-title">Why Choose Connor? 🏆</h2>
+    <div class="why-grid">
+      <div class="why-item"><div class="icon">🧠</div><h4>Patient & Encouraging</h4><p>Every question is a great question. I make math feel easy and fun all summer!</p></div>
+      <div class="why-item"><div class="icon">💰</div><h4>Super Affordable</h4><p>Just $25/hour — quality summer tutoring without breaking the bank.</p></div>
+      <div class="why-item"><div class="icon">🎯</div><h4>Personalized</h4><p>Each session focuses on exactly what your child needs — no wasted time.</p></div>
+      <div class="why-item"><div class="icon">📅</div><h4>Flexible Schedule</h4><p>In-person sessions scheduled around your summer plans — May 26 through August 6.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section">
+  <h2 class="section-title">Book Your Summer Session! ☀️</h2>
+  <p>Call or text to schedule your in-person session. Summer runs May 26 – August 6 — spots fill up fast!</p>
+  <div class="phone-card">
+    <span class="phone-emoji">📱</span>
+    <div class="phone-label">Call or Text Anytime</div>
+    <a href="tel:9013026024" class="phone-number">901-302-6024</a>
+    <p class="phone-note">In-person sessions · May 26 – Aug 6 ☀️</p>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <span>Connor's Summer Math Program</span> · In-Person · May 26–Aug 6 · Grades 3–5 · $25/hour · 📞 901-302-6024</p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modalBox">
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <span class="modal-icon" id="modalIcon">✖️</span>
+        <div>
+          <h2 id="modalTitle">Topic</h2>
+          <span class="modal-grade-tag" id="modalTag">3rd Grade</span>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-desc" id="modalDesc"></p>
+      <div id="modalExamples"></div>
+      <div id="modalTips"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const topics = {
+  mult3:{icon:'✖️',title:'Multiplication (×1–×10)',grade:'3rd Grade',tag:'tag-g3',desc:'Multiplication is a fast way to add equal groups! Instead of adding 6+6+6+6, you can just say 6×4=24. In 3rd grade we master all the times tables from ×1 through ×10. Once you know these by heart, everything else in math gets WAY easier.',examples:[{label:'Basic times table',content:'7 × 8 = ?',answer:'Answer: 56 — Think of 7 groups of 8 apples! 🍎',color:''},{label:'Real-life example',content:'You have 4 bags with 6 cookies each. How many cookies total?',answer:'Answer: 4 × 6 = 24 cookies 🍪',color:'orange'},{label:'Array model',content:'Draw 3 rows of 5 dots. Count all the dots.',answer:'Answer: 3 × 5 = 15 dots',color:'lime'}],tips:['🎯 We use fun tricks like the "finger trick" for ×9 to memorize tables fast','🎵 I teach skip-counting songs that make tables stick in your brain','📋 We practice with flashcards, games, and timed challenges','💡 You learn the commutative property: 3×4 is the same as 4×3!']},
+  div3:{icon:'➗',title:'Introduction to Division',grade:'3rd Grade',tag:'tag-g3',desc:'Division is the opposite of multiplication — it means splitting things into equal groups. If you have 12 cookies and want to share them equally among 3 friends, division tells you each friend gets 4. We connect division to multiplication facts you already know!',examples:[{label:'Basic division',content:'20 ÷ 4 = ?',answer:'Answer: 5 — Think: 4 × ? = 20',color:''},{label:'Sharing equally',content:'18 stickers shared among 3 kids. How many each?',answer:'Answer: 18 ÷ 3 = 6 stickers each 🌟',color:'orange'},{label:'Fact families',content:'If 6 × 7 = 42, what is 42 ÷ 6?',answer:'Answer: 7 — Division undoes multiplication!',color:'lime'}],tips:['🔗 We use multiplication facts to solve division — they\'re a team!','🧱 We use tiles and drawings to show how groups work','📦 I teach "how many groups of __ fit in __?" thinking','✅ We practice fact families: 3×4=12, 12÷3=4, 12÷4=3']},
+  add3:{icon:'➕',title:'Adding 3-Digit Numbers',grade:'3rd Grade',tag:'tag-g3',desc:'Adding bigger numbers means lining up ones, tens, and hundreds in columns and sometimes "carrying" when a column adds up to 10 or more. This is the foundation for all future addition.',examples:[{label:'Without regrouping',content:'234 + 153 = ?',answer:'Answer: 387 (just add each column)',color:''},{label:'With regrouping (carrying)',content:'467 + 285 = ?',answer:'Answer: 752 — We carry a 1 from the ones and tens columns',color:'orange'},{label:'Word problem',content:'A school has 348 boys and 275 girls. How many students total?',answer:'Answer: 348 + 275 = 623 students 🏫',color:'lime'}],tips:['📊 We always line up place values before adding','🔢 I teach "carrying" step by step with grid paper','🧠 We use estimation first to check if our answer makes sense','✍️ We practice mental math tricks like rounding to the nearest 10']},
+  sub3:{icon:'➖',title:'Subtracting 3-Digit Numbers',grade:'3rd Grade',tag:'tag-g3',desc:'Subtraction with bigger numbers involves "borrowing" — when a digit is too small to subtract from, we borrow from the next column. It\'s a key skill that comes up in every grade.',examples:[{label:'Without borrowing',content:'589 − 342 = ?',answer:'Answer: 247',color:''},{label:'With borrowing',content:'700 − 456 = ?',answer:'Answer: 244 — We borrow across zeros step by step',color:'orange'},{label:'Real-life',content:'You saved $500. You spend $178. How much left?',answer:'Answer: $500 − $178 = $322 💸',color:'lime'}],tips:['📐 I teach borrowing column-by-column','✅ We check by adding back: 244 + 456 = 700 ✓','🎮 Games where you "take away" objects build intuition','🔟 Borrowing across zeros is tricky — we slow down on those!']},
+  frac3:{icon:'🍕',title:'Basic Fractions (½, ⅓, ¼)',grade:'3rd Grade',tag:'tag-g3',desc:'Fractions describe parts of a whole. The denominator (bottom) tells how many equal pieces, and the numerator (top) tells how many you have. We use pizza, chocolate bars, and shapes to make this visual!',examples:[{label:'What is ¾?',content:'A pizza is cut into 4 equal slices. You eat 3 of them.',answer:'You ate ¾ of the pizza! 🍕',color:''},{label:'Identifying fractions',content:'A chocolate bar has 6 pieces. 2 are shaded. What fraction is shaded?',answer:'Answer: 2/6 (or simplified: 1/3) 🍫',color:'orange'},{label:'Number line',content:'Where does ½ go on a number line from 0 to 1?',answer:'Answer: Exactly in the middle!',color:'lime'}],tips:['🍕 I always start with food examples — pizza, pie, and chocolate!','🎨 We shade and draw fractions to visualize them','📏 We plot fractions on number lines','⚖️ We compare fractions: is ½ bigger or smaller than ¼?']},
+  time3:{icon:'📏',title:'Measurement & Telling Time',grade:'3rd Grade',tag:'tag-g3',desc:'We measure length in inches, feet, centimeters, and meters. We also master telling time to the nearest minute and calculating elapsed time (how long something takes).',examples:[{label:'Telling time',content:'Big hand on 6, small hand between 3 and 4.',answer:'The time is 3:30 — half past three! 🕞',color:''},{label:'Elapsed time',content:'Practice starts at 4:15 and ends at 5:45. How long?',answer:'Answer: 1 hour and 30 minutes',color:'orange'},{label:'Measurement',content:'Which unit to measure a classroom — feet or miles?',answer:'Answer: Feet! Miles are for long distances 🏫',color:'lime'}],tips:['🕐 We use a big analog clock to practice reading time','📅 I teach the "jump strategy" for elapsed time on a number line','📏 We actually measure real objects using rulers','🌎 We compare metric (cm, m) and standard (in, ft) units']},
+  shape3:{icon:'📐',title:'Shapes & Perimeter',grade:'3rd Grade',tag:'tag-g3',desc:'We study 2D shapes and their properties — sides, angles, and symmetry. Perimeter is the total distance around the outside of a shape, like fencing around a yard!',examples:[{label:'Finding perimeter',content:'A rectangle is 8 cm long and 5 cm wide. Perimeter?',answer:'Answer: 8+5+8+5 = 26 cm 📏',color:''},{label:'Identifying shapes',content:'A shape has 6 equal sides and 6 angles. What is it?',answer:'Answer: A hexagon! 🛑',color:'orange'},{label:'Missing side',content:'Triangle sides: 7, 9, and ? cm. Perimeter = 23 cm.',answer:'Answer: ? = 23 − 7 − 9 = 7 cm',color:'lime'}],tips:['📦 We use geoboards and dot paper to build shapes','📐 Perimeter is "the fence" around a shape','✏️ We draw and label shapes from memory','🔍 We find shapes in real life — tiles, windows, signs!']},
+  graph3:{icon:'📊',title:'Simple Graphs & Data',grade:'3rd Grade',tag:'tag-g3',desc:'Data is organized information! We learn to read and create bar graphs, picture graphs, and tally charts. We also answer comparison questions like "how many more?" and "how many in all?"',examples:[{label:'Reading a bar graph',content:'"Favorite Fruit": Apple=8, Banana=5, Orange=3. Most popular?',answer:'Answer: Apple! With 8 votes 🍎',color:''},{label:'Comparing data',content:'How many MORE chose Apple over Orange?',answer:'Answer: 8 − 3 = 5 more students',color:'orange'},{label:'Tally chart',content:'Votes: Pizza:IIII II  Pasta:IIII  Salad:II',answer:'Pizza=7, Pasta=5, Salad=2. Pizza wins! 🍕',color:'lime'}],tips:['📊 We create graphs about topics the student cares about!','🔍 Key questions: most, least, difference, total','✍️ We practice reading existing graphs AND making our own','🎨 Color-coding bars makes graphs easier to understand']},
+  word3:{icon:'🧩',title:'Word Problems',grade:'3rd Grade',tag:'tag-g3',desc:'Word problems turn real-life situations into math equations. The key skill is reading carefully, identifying what\'s given vs. what\'s needed, and choosing the right operation. I teach a step-by-step strategy!',examples:[{label:'Addition',content:'135 red balloons and 247 blue at a party. Total?',answer:'Answer: 135 + 247 = 382 balloons 🎈',color:''},{label:'Multiplication',content:'Each student gets 6 pencils. 8 students. How many pencils?',answer:'Answer: 6 × 8 = 48 pencils ✏️',color:'orange'},{label:'Two-step',content:'50 stickers. Give 8 to each of 4 friends. How many left?',answer:'Step 1: 4×8=32. Step 2: 50−32=18 left ⭐',color:'lime'}],tips:['📖 I teach CUBE: Circle numbers, Underline question, Box keywords, Evaluate','✏️ We always draw a picture before solving','🔍 Spot clue words: total, difference, each, left','✅ We always check: does the answer make sense?']},
+  money3:{icon:'💰',title:'Money & Making Change',grade:'3rd Grade',tag:'tag-g3',desc:'Money math is one of the most real-world skills in 3rd grade! We identify coins and bills, count collections, add prices, and figure out how much change you get back.',examples:[{label:'Counting coins',content:'3 quarters, 2 dimes, 1 nickel. How much?',answer:'Answer: 75¢ + 20¢ + 5¢ = $1.00 🪙',color:''},{label:'Making change',content:'Toy costs $2.35. You pay $5.00. Change?',answer:'Answer: $5.00 − $2.35 = $2.65 💸',color:'orange'},{label:'Adding prices',content:'Sandwich $3.75 + juice $1.50 = ?',answer:'Answer: $3.75 + $1.50 = $5.25 🥪',color:'lime'}],tips:['🪙 We use real or pretend coins for hands-on practice','⬆️ I teach "counting up" to make change — easier than subtracting!','💡 We practice with a pretend store setup','📊 We connect money to decimals: $1.50 = 1 dollar and 50 cents']},
+  mult4:{icon:'✖️',title:'Multi-Digit Multiplication',grade:'4th Grade',tag:'tag-g4',desc:'Now we multiply bigger numbers — like 34×27 — using the standard algorithm. We also use area models and partial products to understand WHY the algorithm works.',examples:[{label:'Two-digit × one-digit',content:'47 × 6 = ?',answer:'Answer: 282 (40×6=240, 7×6=42, add them)',color:''},{label:'Two-digit × two-digit',content:'23 × 15 = ?',answer:'Answer: 345 — Area model: (20×15)+(3×15)=300+45',color:'orange'},{label:'Real-life',content:'36 boxes, 24 crayons each. Total crayons?',answer:'Answer: 36 × 24 = 864 crayons 🖍️',color:'lime'}],tips:['📊 Area models show WHY the algorithm works','🔢 Always estimate first!','✍️ I teach partial products before standard algorithm','🎯 We check answers using division']},
+  div4:{icon:'➗',title:'Long Division',grade:'4th Grade',tag:'tag-g4',desc:'Long division follows DMSB steps: Divide, Multiply, Subtract, Bring down. Once you learn the pattern, you can solve any division problem!',examples:[{label:'Basic long division',content:'96 ÷ 4 = ?',answer:'Answer: 24 — 4 into 9 is 2 (r1), bring down 6, 4 into 16 is 4',color:''},{label:'With remainder',content:'85 ÷ 6 = ?',answer:'Answer: 14 remainder 1 (14 R1)',color:'orange'},{label:'Real-life',content:'3 friends split an $87 bill. Each pays?',answer:'Answer: $87 ÷ 3 = $29 each 🍽️',color:'lime'}],tips:['📝 DMSB: Divide → Multiply → Subtract → Bring down','🔢 Use estimation to choose the right digit each step','✅ Check by multiplying your answer by the divisor!','🧩 We start with easy divisors before harder ones']},
+  efrac4:{icon:'🍕',title:'Equivalent Fractions',grade:'4th Grade',tag:'tag-g4',desc:'Equivalent fractions look different but represent the same amount. ½ = 2/4 = 4/8. We multiply or divide both the numerator and denominator by the same number.',examples:[{label:'Finding equivalent',content:'Is 2/3 equivalent to 8/12?',answer:'Answer: YES! 2×4=8 and 3×4=12 ✓',color:''},{label:'Simplifying',content:'Simplify 6/8 to lowest terms.',answer:'Answer: 3/4 — Divide top and bottom by 2',color:'orange'},{label:'Visual model',content:'Shade ½ of one rectangle and 2/4 of another.',answer:'The shaded parts are EQUAL — ½ = 2/4! 🎨',color:'lime'}],tips:['🎨 We use fraction bars to see equivalence visually','✖️ Multiply or divide BOTH top and bottom by the same number','📏 We find the GCF to simplify fractions','🔍 We compare fractions by converting to the same denominator']},
+  addfrac4:{icon:'➕',title:'Adding & Subtracting Fractions',grade:'4th Grade',tag:'tag-g4',desc:'To add or subtract fractions, the denominators must be the same (common denominator). Then just add or subtract the top numbers!',examples:[{label:'Same denominators',content:'3/8 + 2/8 = ?',answer:'Answer: 5/8 — Add the tops, keep the bottom!',color:''},{label:'Different denominators',content:'1/2 + 1/4 = ?',answer:'Answer: Change 1/2 to 2/4, then 2/4+1/4=3/4 🍕',color:'orange'},{label:'Subtraction',content:'5/6 − 1/6 = ?',answer:'Answer: 4/6 = 2/3 (simplify!)',color:'lime'}],tips:['📏 Denominators must match before adding or subtracting!','🔢 I teach LCM to find common denominators','✅ Always simplify the final answer','🎨 We use fraction strips to see adding visually']},
+  dec4:{icon:'🔢',title:'Decimals (Tenths & Hundredths)',grade:'4th Grade',tag:'tag-g4',desc:'Decimals are just fractions in a different form. 0.7 = 7/10, 0.35 = 35/100. We connect decimals to money and fractions!',examples:[{label:'Reading decimals',content:'What is 0.6 as a fraction?',answer:'Answer: 6/10 — Six tenths!',color:''},{label:'Comparing',content:'Which is larger: 0.4 or 0.38?',answer:'Answer: 0.4 (= 0.40) — 40 hundredths > 38 hundredths!',color:'orange'},{label:'Money connection',content:'$1.25 = how many hundredths?',answer:'Answer: 125 hundredths — 1 dollar = 100 cents! 💰',color:'lime'}],tips:['💰 Money is the best real-world example of decimals!','📊 We use hundredths grids to visualize values','⚖️ Line up decimal points when comparing!','🔢 We go tenths → hundredths before thousandths (5th grade)']},
+  area4:{icon:'📐',title:'Area & Perimeter',grade:'4th Grade',tag:'tag-g4',desc:'Perimeter = distance around (the fence). Area = space inside (the floor). For a rectangle, Area = Length × Width.',examples:[{label:'Finding area',content:'Room 12 ft long, 9 ft wide. Area?',answer:'Answer: 12 × 9 = 108 square feet 🏠',color:''},{label:'Finding perimeter',content:'Same room. Perimeter?',answer:'Answer: 12+9+12+9 = 42 feet',color:'orange'},{label:'Missing dimension',content:'Area = 56 sq cm, width = 7 cm. Length?',answer:'Answer: 56 ÷ 7 = 8 cm 📏',color:'lime'}],tips:['🏠 "Floor vs fence" helps remember area vs perimeter','📐 Area uses SQUARE units — perimeter uses regular units','✍️ Draw and label before calculating','🧩 Break irregular shapes into rectangles!']},
+  angle4:{icon:'📏',title:'Angles & Lines',grade:'4th Grade',tag:'tag-g4',desc:'Angles are measured in degrees. Right angles = 90°, acute < 90°, obtuse > 90°. We also study parallel and perpendicular lines.',examples:[{label:'Classifying angles',content:'An angle measures 65°. What type?',answer:'Answer: Acute — less than 90°! 🔺',color:''},{label:'Adding angles',content:'Two angles make a straight line (180°). One is 115°. Other?',answer:'Answer: 180° − 115° = 65° 📐',color:'orange'},{label:'Real-life',content:'A door fully open against a wall makes what angle?',answer:'Answer: 90° — a right angle! 🚪',color:'lime'}],tips:['📐 We use protractors hands-on','🔍 4 types: acute, right, obtuse, straight (180°)','🗺️ Find parallel and perpendicular lines in buildings and roads','✏️ We draw angles of specific degrees from scratch']},
+  graph4:{icon:'📊',title:'Bar Graphs & Line Plots',grade:'4th Grade',tag:'tag-g4',desc:'We read and create bar graphs with larger numbers. Line plots show individual data points — great for seeing clusters, gaps, and range. We also find mode and range.',examples:[{label:'Bar graph',content:'July rainfall = 3.5 in, August = 5 in. How much MORE in August?',answer:'Answer: 5 − 3.5 = 1.5 more inches ☔',color:''},{label:'Line plot',content:'Pencil lengths: 4,4,5,5,5,6,7. Most common?',answer:'Answer: 5 inches (mode — appears 3 times) ✏️',color:'orange'},{label:'Range',content:'Same data. What is the range?',answer:'Answer: 7 − 4 = 3 inches',color:'lime'}],tips:['📊 We create graphs from real data students collect','🔍 I teach mode, range, and how to spot outliers','📏 Line plots work great with measurement data','✅ Always label axes and give graphs a title']},
+  word4:{icon:'🧩',title:'Multi-Step Word Problems',grade:'4th Grade',tag:'tag-g4',desc:'These problems require two or more operations in the right order. All your math skills — addition, subtraction, multiplication, division — come together in one problem!',examples:[{label:'Two-step',content:'6 boxes, 24 pens each. 38 pens sold. How many remain?',answer:'Step 1: 6×24=144. Step 2: 144−38=106 pens ✏️',color:''},{label:'Money',content:'4 friends buy 3 pizzas at $12 each. Split equally. Per person?',answer:'Step 1: 3×12=$36. Step 2: $36÷4=$9 each 🍕',color:'orange'},{label:'Comparison',content:'Team A: 15 pts/game × 6 games. Team B: 95 total. Who wins?',answer:'Team A: 15×6=90. Team B: 95. Team B wins by 5! 🏆',color:'lime'}],tips:['📋 Map out steps BEFORE calculating','✏️ Label each step with what you\'re finding','🔍 Clue words tell you the operation','✅ Re-read the question at the end to make sure you answered it']},
+  factor4:{icon:'🔁',title:'Factors & Multiples',grade:'4th Grade',tag:'tag-g4',desc:'Factors divide evenly into a number. Multiples are what you get when you multiply a number by 1, 2, 3... We also find GCF and LCM — skills needed for fractions!',examples:[{label:'Factors',content:'All factors of 24?',answer:'Answer: 1, 2, 3, 4, 6, 8, 12, 24',color:''},{label:'Multiples',content:'First 5 multiples of 7?',answer:'Answer: 7, 14, 21, 28, 35',color:'orange'},{label:'Prime vs composite',content:'Is 17 prime or composite?',answer:'Answer: Prime! Only factors are 1 and 17 🔒',color:'lime'}],tips:['🔢 Find factor pairs by testing 1×?, 2×?, 3×?...','📋 Factor rainbows keep pairs organized','🎯 Prime numbers only have 2 factors: 1 and themselves','🔗 GCF is used to simplify fractions!']},
+  multfrac5:{icon:'✖️',title:'Multiplying Fractions',grade:'5th Grade',tag:'tag-g5',desc:'Multiplying fractions: multiply top × top, bottom × bottom. The key insight is understanding what "a fraction OF something" means.',examples:[{label:'Fraction × fraction',content:'2/3 × 3/4 = ?',answer:'Answer: 6/12 = 1/2 ✓',color:''},{label:'Fraction × whole number',content:'3/4 of 20 = ?',answer:'Answer: 3/4 × 20 = 60/4 = 15',color:'orange'},{label:'Real-life',content:'Recipe needs 2/3 cup sugar. Making 1/2 recipe. How much sugar?',answer:'Answer: 2/3 × 1/2 = 1/3 cup 🍰',color:'lime'}],tips:['✖️ Multiply tops together, multiply bottoms together','📉 Multiplying by a fraction makes the number SMALLER','✂️ Cancel/simplify BEFORE multiplying to keep numbers small','🎨 Visual models show what fraction multiplication looks like']},
+  divfrac5:{icon:'➗',title:'Dividing Fractions',grade:'5th Grade',tag:'tag-g5',desc:'"Keep, Change, Flip": Keep the first fraction, Change ÷ to ×, Flip the second fraction. Then multiply!',examples:[{label:'Fraction ÷ fraction',content:'3/4 ÷ 1/2 = ?',answer:'Answer: 3/4 × 2/1 = 6/4 = 1½',color:''},{label:'Whole ÷ fraction',content:'4 ÷ 1/3 = ?',answer:'Answer: 4 × 3 = 12 — How many thirds fit in 4?',color:'orange'},{label:'Real-life',content:'3 cups of flour. Each muffin needs 3/4 cup. How many muffins?',answer:'Answer: 3 ÷ 3/4 = 4 muffins 🧁',color:'lime'}],tips:['🔄 "Keep, Change, Flip" — memorize this phrase!','🤔 Division by ½ = finding how many halves fit in','✅ Always simplify the final answer','🎯 Lots of real-world problems to make the concept click']},
+  dec5:{icon:'🔢',title:'Decimals to Thousandths',grade:'5th Grade',tag:'tag-g5',desc:'We extend decimal place value: tenths (0.1), hundredths (0.01), thousandths (0.001). Used in science, sports stats, and everyday life!',examples:[{label:'Reading',content:'Write 0.347 in words.',answer:'Answer: Three hundred forty-seven thousandths 📝',color:''},{label:'Ordering',content:'Order: 0.4, 0.04, 0.44, 0.404',answer:'Answer: 0.04, 0.4, 0.404, 0.44',color:'orange'},{label:'Rounding',content:'Round 3.476 to the nearest hundredth.',answer:'Answer: 3.48 — the 6 rounds up!',color:'lime'}],tips:['📊 Place value charts show where each digit lives','⬆️ Rounding: 5 or more → round up!','🏃 Olympics use thousandths! 9.987 seconds','🔍 Line up decimal points when comparing']},
+  adddec5:{icon:'➕',title:'Adding & Subtracting Decimals',grade:'5th Grade',tag:'tag-g5',desc:'Golden rule: always line up the decimal points! Then add or subtract like whole numbers, carrying or borrowing as needed.',examples:[{label:'Adding',content:'4.73 + 2.8 = ?',answer:'Answer: 4.73 + 2.80 = 7.53 ✓',color:''},{label:'Subtracting',content:'10 − 3.45 = ?',answer:'Answer: 10.00 − 3.45 = 6.55',color:'orange'},{label:'Real-life',content:'Run 1.35 miles in the morning, 0.9 miles after school. Total?',answer:'Answer: 1.35 + 0.90 = 2.25 miles 🏃',color:'lime'}],tips:['📊 Line up decimal points FIRST — always!','🔢 Add placeholder zeros to complete columns','💰 Money problems are great practice','✅ Estimate first to catch errors']},
+  multdec5:{icon:'✖️',title:'Multiplying Decimals',grade:'5th Grade',tag:'tag-g5',desc:'Multiply as whole numbers, then count total decimal places in both factors and place the decimal in your answer.',examples:[{label:'Decimal × whole',content:'3.4 × 5 = ?',answer:'Answer: 34×5=170, 1 decimal place → 17.0',color:''},{label:'Decimal × decimal',content:'2.3 × 1.4 = ?',answer:'Answer: 23×14=322, 2 decimal places → 3.22',color:'orange'},{label:'Real-life',content:'Apples $1.35/lb. You buy 2.5 lbs. Total?',answer:'Answer: $3.375 ≈ $3.38 🍎',color:'lime'}],tips:['🔢 Count decimal places in BOTH numbers and add them','📝 Multiply as whole numbers first, THEN place the decimal','🎯 Estimate first to check your answer makes sense','✅ More decimal places in factors = more in answer']},
+  vol5:{icon:'📦',title:'Volume of 3D Shapes',grade:'5th Grade',tag:'tag-g5',desc:'Volume measures how much 3D space an object takes up. For rectangular prisms: Volume = Length × Width × Height.',examples:[{label:'Basic volume',content:'Box: 5 cm × 4 cm × 3 cm. Volume?',answer:'Answer: 5×4×3 = 60 cm³ 📦',color:''},{label:'Layers',content:'Base of 12 unit cubes, 5 layers tall. Volume?',answer:'Answer: 12 × 5 = 60 cubic units',color:'orange'},{label:'Missing dimension',content:'Volume=120 cm³, length=6, width=4. Height?',answer:'Answer: 120 ÷ (6×4) = 5 cm',color:'lime'}],tips:['🧊 We build 3D shapes with unit cubes to feel volume','📐 V = L × W × H — memorize this!','🔢 Cubic units have exponent 3: cm³, ft³','🏠 Volume tells you how much fits in a box or room!']},
+  coord5:{icon:'📐',title:'Coordinate Plane & Graphing',grade:'5th Grade',tag:'tag-g5',desc:'Plot points using ordered pairs (x, y) — x = go RIGHT, y = go UP. Foundation for all future algebra!',examples:[{label:'Plotting a point',content:'Plot (4, 3) on a coordinate plane.',answer:'Answer: Start at origin, go RIGHT 4, then UP 3 🎯',color:''},{label:'Reading a point',content:'2 right, 5 up from origin. Coordinates?',answer:'Answer: (2, 5) — always x first, then y!',color:'orange'},{label:'Pattern',content:'Plot: (0,0),(1,2),(2,4),(3,6). What do you see?',answer:'Answer: A straight line! y doubles x — linear pattern 📈',color:'lime'}],tips:['🗺️ "Run before you rise" — go across first (x), then up (y)','📍 The origin is always (0,0)','📈 Connecting points reveals patterns and rules','🎮 Battleship is great practice for coordinate pairs!']},
+  ops5:{icon:'🔣',title:'Order of Operations (PEMDAS)',grade:'5th Grade',tag:'tag-g5',desc:'PEMDAS: Parentheses → Exponents → Multiply/Divide → Add/Subtract. Without this order, everyone would get different answers!',examples:[{label:'PEMDAS in action',content:'3 + 4 × 2 = ?',answer:'Answer: 11 — multiply FIRST: 4×2=8, then +3. NOT 14!',color:''},{label:'With parentheses',content:'(3 + 4) × 2 = ?',answer:'Answer: 14 — parentheses first: 3+4=7, then ×2',color:'orange'},{label:'Complex',content:'20 − (3+2) × 3 + 1 = ?',answer:'Answer: (3+2)=5 → 5×3=15 → 20−15+1 = 6',color:'lime'}],tips:['📝 Please Excuse My Dear Aunt Sally = PEMDAS','⚠️ Multiply/Divide are equal — go left to right!','⚠️ Add/Subtract are equal — go left to right too!','✅ Show each step on a new line']},
+  alg5:{icon:'🧮',title:'Intro to Algebra Patterns',grade:'5th Grade',tag:'tag-g5',desc:'We use variables (letters) to represent unknown numbers. We identify patterns, write rules, and evaluate expressions — the bridge to middle school!',examples:[{label:'Pattern',content:'3, 6, 12, 24, ___. Rule and next term?',answer:'Answer: Rule is ×2. Next: 48! 🔢',color:''},{label:'Expression',content:'Connor earns $5/hr tutoring. Write an expression for h hours.',answer:'Answer: 5h — plug in any h to find his pay!',color:'orange'},{label:'Evaluating',content:'Evaluate 3n + 4 when n = 7.',answer:'Answer: 3(7)+4 = 21+4 = 25 ✓',color:'lime'}],tips:['🔤 Variables are just placeholders for unknown numbers','📋 We find patterns in input/output tables','✏️ I show how patterns connect to real-life formulas','🔮 This directly prepares you for 6th grade pre-algebra!']},
+  word5:{icon:'🧩',title:'Complex Word Problems',grade:'5th Grade',tag:'tag-g5',desc:'5th grade word problems involve fractions, decimals, multiple steps, and variables. Read carefully, plan your steps, calculate, and always check!',examples:[{label:'Decimal + fraction',content:'Track is 0.75 miles. Mia runs 2/3 of it. How far?',answer:'Answer: ¾ × 2/3 = ½ mile 🏃',color:''},{label:'Multi-step',content:'Recipe needs 2.5 cups/batch. Want 3 batches, have 6 cups. How many more needed?',answer:'Step 1: 2.5×3=7.5. Step 2: 7.5−6=1.5 cups 🍰',color:'orange'},{label:'Division',content:'36-inch ribbon cut into 2¼-inch pieces. How many pieces?',answer:'Answer: 36 ÷ 2.25 = 16 pieces ✂️',color:'lime'}],tips:['📖 Read the problem twice before touching a pencil','✏️ Write given info and the unknown separately','🔢 Show every step — process matters!','✅ Answer in a complete sentence with correct units']}
+};
+
+function openModal(id) {
+  const t = topics[id];
+  if (!t) return;
+  document.getElementById('modalIcon').textContent = t.icon;
+  document.getElementById('modalTitle').textContent = t.title;
+  const tag = document.getElementById('modalTag');
+  tag.textContent = t.grade;
+  tag.className = 'modal-grade-tag ' + t.tag;
+  document.getElementById('modalDesc').textContent = t.desc;
+
+  let exHtml = '<div class="modal-section-title">📚 Examples</div>';
+  t.examples.forEach(ex => {
+    exHtml += `<div class="example-box ${ex.color}">
+      <div class="ex-label">Example: ${ex.label}</div>
+      <div class="ex-content">${ex.content}</div>
+      <div class="ex-answer">${ex.answer}</div>
+    </div>`;
+  });
+  document.getElementById('modalExamples').innerHTML = exHtml;
+
+  let tipHtml = '<div class="modal-section-title" style="margin-top:20px;">💡 How I Teach This</div><ul class="tips-list">';
+  t.tips.forEach(tip => {
+    const first = tip.split(' ')[0];
+    const rest = tip.substring(tip.indexOf(' ')+1);
+    tipHtml += `<li><span class="tip-bullet">${first}</span><span>${rest}</span></li>`;
+  });
+  tipHtml += '</ul>';
+  document.getElementById('modalTips').innerHTML = tipHtml;
+
+  document.getElementById('modalOverlay').classList.add('visible');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('visible');
+  document.body.style.overflow = '';
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+function toggle(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+
+</body>
+</html>
